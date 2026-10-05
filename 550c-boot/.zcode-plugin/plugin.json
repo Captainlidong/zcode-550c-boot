@@ -1,0 +1,9 @@
+{
+  "name": "550c-boot",
+  "version": "0.3.0",
+  "description": "550C boot animation for ZCode: plays on app launch via the OS-level launcher (~/.zcode/550c-boot), full 1:1 web show via /550c-boot. Ported from yannicksong0106/dsh-550c-boot (MIT).",
+  "author": {
+    "name": "CaptainDong (ZCode port) · Ziyang Song (original plugin) · Voidpoket (original animation)"
+  },
+  "commands": "./commands"
+}

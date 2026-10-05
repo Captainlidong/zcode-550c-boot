@@ -1,0 +1,21 @@
+' 550c-boot app-launch splash template — installed by scripts/install-launcher.mjs
+' Flow: double-click the ZCode shortcut -> a maximized console plays the 550C
+'       boot animation (self-closing) -> the real ZCode.exe starts.
+' Undo: restore the original .lnk from backup\ and delete this folder.
+Option Explicit
+Dim sh, fso, base, isTest, zcodeExe
+Set sh = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+base = fso.GetParentFolderName(WScript.ScriptFullName)
+zcodeExe = "__ZCODE_EXE__"
+
+isTest = False
+If sh.ExpandEnvironmentStrings("%ZC_BOOT_TEST%") = "1" Then isTest = True
+
+' 1) play the boot animation: visible (maximized) console, wait until it exits
+sh.Run "cmd /c """ & base & "\splash.cmd""", 3, True
+
+' 2) start ZCode itself (skipped in test mode)
+If Not isTest Then
+  sh.Run """" & zcodeExe & """", 1, False
+End If
