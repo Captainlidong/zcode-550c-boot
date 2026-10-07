@@ -1,9 +1,11 @@
 ' 550c-boot app-launch splash template — installed by scripts/install-launcher.mjs
 ' Flow: double-click the ZCode shortcut -> a maximized console plays the 550C
 '       boot animation (self-closing) -> the real ZCode.exe starts.
+'       With mode=off in ~/.zcode/550c-boot.json the animation step is skipped
+'       entirely (no console window at all).
 ' Undo: restore the original .lnk from backup\ and delete this folder.
 Option Explicit
-Dim sh, fso, base, isTest, zcodeExe
+Dim sh, fso, base, isTest, zcodeExe, settingsPath, mode, ts, content
 Set sh = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 base = fso.GetParentFolderName(WScript.ScriptFullName)
@@ -12,8 +14,20 @@ zcodeExe = "__ZCODE_EXE__"
 isTest = False
 If sh.ExpandEnvironmentStrings("%ZC_BOOT_TEST%") = "1" Then isTest = True
 
+' read ~/.zcode/550c-boot.json: skip the animation step when mode=off
+mode = "simple"
+settingsPath = sh.ExpandEnvironmentStrings("%USERPROFILE%") & "\.zcode\550c-boot.json"
+On Error Resume Next
+Set ts = fso.OpenTextFile(settingsPath, 1, False)
+content = Replace(ts.ReadAll, " ", "")
+ts.Close
+On Error GoTo 0
+If InStr(LCase(content), """mode"":""off""") > 0 Then mode = "off"
+
 ' 1) play the boot animation: visible (maximized) console, wait until it exits
-sh.Run "cmd /c """ & base & "\splash.cmd""", 3, True
+If mode <> "off" Then
+  sh.Run "cmd /c """ & base & "\splash.cmd""", 3, True
+End If
 
 ' 2) start ZCode itself (skipped in test mode)
 If Not isTest Then

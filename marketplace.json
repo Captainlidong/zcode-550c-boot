@@ -1,6 +1,8 @@
 {
   "name": "zcode-550c-boot",
-  "owner": { "name": "Captainlidong" },
+  "owner": {
+    "name": "Captainlidong"
+  },
   "plugins": [
     {
       "name": "550c-boot",
@@ -8,11 +10,14 @@
       "version": "0.3.0",
       "description": "550C boot animation on ZCode app launch (OS-level launcher) plus full 1:1 web show via /550c-boot.",
       "displayName": "550C Boot Animation",
-      "displayName_i18n": { "zh-CN": "550C 开机动画" },
+      "displayName_i18n": {
+        "zh-CN": "550C 开机动画"
+      },
       "description_i18n": {
         "zh-CN": "打开 ZCode 时先播放琥珀磷光 CRT 风格 550C 开机动画、结束后进入界面;/550c-boot 随时用浏览器播放 1:1 完整网页版,并可切换模式与配色。移植自 yannicksong0106/dsh-550c-boot (MIT)。"
       },
       "category": "utilities"
     }
-  ]
+  ],
+  "version": "0.3.1"
 }
